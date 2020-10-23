@@ -13,27 +13,44 @@ class ViewController: UIViewController {
     var cancellables: Set<AnyCancellable> = .init()
 
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var topConstraint1: NSLayoutConstraint!
+    @IBOutlet private weak var topConstraint2: NSLayoutConstraint!
 
     private let viewModel = ViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let hostingViewController = UIHostingController(rootView: ExpandLabelView(viewModel: viewModel))
-        addChild(hostingViewController)
-        view.addSubview(hostingViewController.view)
-        hostingViewController.didMove(toParent: self)
+        let hostingViewController1 = UIHostingController(rootView: ExpandLabelView1(viewModel: viewModel))
+        addChild(hostingViewController1)
+        view.addSubview(hostingViewController1.view)
+        hostingViewController1.didMove(toParent: self)
 
-        hostingViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        let hostingViewController2 = UIHostingController(rootView: ExpandLabelView2(viewModel: viewModel))
+        addChild(hostingViewController2)
+        view.addSubview(hostingViewController2.view)
+        hostingViewController2.didMove(toParent: self)
+
+        hostingViewController1.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingViewController2.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hostingViewController.view.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-            hostingViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            hostingViewController1.view.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            hostingViewController1.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingViewController1.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            hostingViewController2.view.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            hostingViewController2.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingViewController2.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
 
-        viewModel.subject.sink { [weak self] height in
-            self?.topConstraint.constant = height + 32
+        viewModel.subject1.sink { [weak self] height in
+            self?.topConstraint1.constant = height + 32
+        }
+        .store(in: &cancellables)
+
+        viewModel.subject2.sink { [weak self] height in
+            self?.topConstraint2.constant = height + 32
         }
         .store(in: &cancellables)
     }

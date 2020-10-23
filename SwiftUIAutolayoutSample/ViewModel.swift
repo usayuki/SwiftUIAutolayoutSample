@@ -10,9 +10,14 @@ import UIKit
 
 final class ViewModel: ObservableObject {
 
-    let subject = PassthroughSubject<CGFloat, Never>()
+    let subject1 = PassthroughSubject<CGFloat, Never>()
+    let subject2 = PassthroughSubject<CGFloat, Never>()
 
-    func send(height: CGFloat) {
-        subject.send(height)
+    func send1(height: CGFloat) {
+        subject1.send(height)
+    }
+
+    func send2(height: CGFloat) {
+        subject2.send(height)
     }
 }

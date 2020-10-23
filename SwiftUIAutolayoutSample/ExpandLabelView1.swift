@@ -1,5 +1,5 @@
 //
-//  ExpandLabelView.swift
+//  ExpandLabelView1.swift
 //  SwiftUIAutolayoutSample
 //
 //  Created by usayuki on 2020/10/17.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandLabelView: View {
+struct ExpandLabelView1: View {
     @ObservedObject var viewModel: ViewModel
     @State private var isExpand: Bool = false
 
@@ -33,14 +33,14 @@ struct ExpandLabelView: View {
                 isExpand.toggle()
             }
             .background(GeometryReader { proxy -> Text in
-                viewModel.send(height: proxy.size.height)
+                viewModel.send1(height: proxy.size.height)
                 return Text("")
             })
     }
 }
 
-struct ExpandLabelView_Previews: PreviewProvider {
+struct ExpandLabelView1_Previews: PreviewProvider {
     static var previews: some View {
-        ExpandLabelView(viewModel: .init())
+        ExpandLabelView1(viewModel: .init())
     }
 }
